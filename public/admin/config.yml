@@ -3,7 +3,7 @@ local_backend:
 
 backend:
   name: github
-  repo: lol-no-lol/school4-astro
+  repo: 80Pikich08/school4-astro
   branch: main
 
 media_folder: "public/uploads"
