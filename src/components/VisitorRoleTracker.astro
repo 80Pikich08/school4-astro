@@ -1,0 +1,200 @@
+<div class="role-popup" id="visitor-role-popup" hidden>
+    <div class="role-popup__card">
+        <button class="role-popup__close" type="button" id="visitor-role-close">
+            ×
+        </button>
+
+        <p class="role-popup__eyebrow">Анализ эффективности сайта</p>
+
+        <h2>Кем вы являетесь?</h2>
+
+        <p>
+            Это поможет понять, какие разделы сайта наиболее полезны для разных
+            групп посетителей. Данные используются только в обезличенной
+            статистике.
+        </p>
+
+        <div class="role-popup__actions">
+            <button type="button" data-visitor-role="parent">Родитель</button>
+            <button type="button" data-visitor-role="student">Ученик</button>
+            <button type="button" data-visitor-role="teacher">Учитель</button>
+            <button type="button" data-visitor-role="other">Другое</button>
+            <button type="button" data-visitor-role="unknown"
+                >Не указывать</button
+            >
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    (() => {
+        const STORAGE_KEY = "school4_visitor_role";
+
+        const roleLabels = {
+            parent: "Родитель",
+            student: "Ученик",
+            teacher: "Учитель",
+            other: "Другое",
+            unknown: "Не указано",
+        };
+
+        const popup = document.getElementById("visitor-role-popup");
+        const closeButton = document.getElementById("visitor-role-close");
+
+        function getRole() {
+            return localStorage.getItem(STORAGE_KEY);
+        }
+
+        function setRole(role) {
+            localStorage.setItem(STORAGE_KEY, role);
+        }
+
+        function closePopup() {
+            popup?.setAttribute("hidden", "");
+        }
+
+        function showPopup() {
+            popup?.removeAttribute("hidden");
+        }
+
+        function trackWithRole(role, attempt = 0) {
+            if (!window.umami) {
+                if (attempt < 20) {
+                    window.setTimeout(
+                        () => trackWithRole(role, attempt + 1),
+                        250,
+                    );
+                }
+
+                return;
+            }
+
+            window.umami.identify({
+                visitor_role: role,
+                visitor_role_label: roleLabels[role] || "Не указано",
+            });
+
+            const eventData = {
+                role,
+                role_label: roleLabels[role] || "Не указано",
+                path: window.location.pathname,
+                title: document.title,
+            };
+
+            window.umami.track("page_view_by_role", eventData);
+            window.umami.track(`page_view_${role}`, eventData);
+        }
+
+        const savedRole = getRole();
+
+        if (savedRole) {
+            trackWithRole(savedRole);
+        } else {
+            showPopup();
+        }
+
+        document.querySelectorAll("[data-visitor-role]").forEach((button) => {
+            button.addEventListener("click", () => {
+                const role =
+                    button.getAttribute("data-visitor-role") || "unknown";
+
+                setRole(role);
+                closePopup();
+                trackWithRole(role);
+            });
+        });
+
+        closeButton?.addEventListener("click", () => {
+            setRole("unknown");
+            closePopup();
+            trackWithRole("unknown");
+        });
+    })();
+</script>
+
+<style>
+    .role-popup[hidden] {
+        display: none;
+    }
+
+    .role-popup {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 1000;
+        width: min(420px, calc(100vw - 32px));
+    }
+
+    .role-popup__card {
+        position: relative;
+        padding: 24px;
+        border: 1px solid #dce3f0;
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 18px 48px rgba(23, 32, 51, 0.18);
+    }
+
+    .role-popup__close {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        border: none;
+        background: transparent;
+        color: #64708a;
+        font-size: 28px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .role-popup__eyebrow {
+        margin: 0 0 8px;
+        color: #2357a4;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    .role-popup h2 {
+        margin: 0 0 10px;
+        font-size: 24px;
+    }
+
+    .role-popup p {
+        margin: 0 0 16px;
+        color: #4b5875;
+        line-height: 1.5;
+    }
+
+    .role-popup__actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .role-popup__actions button {
+        min-height: 42px;
+        padding: 10px 12px;
+        border: 1px solid #2357a4;
+        border-radius: 12px;
+        background: #ffffff;
+        color: #2357a4;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .role-popup__actions button:hover {
+        background: #eaf1ff;
+    }
+
+    @media (max-width: 600px) {
+        .role-popup {
+            right: 16px;
+            bottom: 16px;
+        }
+
+        .role-popup__actions {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

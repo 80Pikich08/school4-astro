@@ -1,0 +1,439 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+const timeline = [
+  {
+    year: "1973–1974",
+    title: "Начало истории школы",
+    text: "В первые годы учителя, ученики и родители вместе благоустраивали здание и территорию школы. Во дворе был заложен школьный парк.",
+  },
+  {
+    year: "1986",
+    title: "Новый этап развития",
+    text: "Школу №40 возглавила Черногузова Светлана Ивановна. Под её руководством педагогический коллектив стал командой единомышленников.",
+  },
+  {
+    year: "1990-е",
+    title: "Физико-математическое направление",
+    text: "В школе был открыт первый в Люберецком районе физико-математический класс, а также начала работать программа «Школа — ВУЗ».",
+  },
+  {
+    year: "1992",
+    title: "Развивающее обучение",
+    text: "Школа начала работать по системе развивающего обучения Б. Д. Эльконина — В. В. Давыдова.",
+  },
+  {
+    year: "1994",
+    title: "Статус гимназии",
+    text: "Образовательной организации был присвоен статус гимназии.",
+  },
+  {
+    year: "2002",
+    title: "Международные и краеведческие проекты",
+    text: "Гимназия начала работать в рамках проекта «Интеркультура», а также активно развивать эколого-краеведческое направление.",
+  },
+  {
+    year: "2008",
+    title: "Национальный проект «Образование»",
+    text: "Итогом многолетней творческой работы педагогического коллектива стала победа в приоритетном национальном проекте «Образование».",
+  },
+  {
+    year: "2013–2014",
+    title: "40-летний юбилей",
+    text: "В 2013–2014 учебном году школа отметила 40-летний юбилей.",
+  },
+];
+
+const values = [
+  {
+    title: "Традиции",
+    text: "Гимназия бережно хранит историю школы, уважение к педагогам и преемственность поколений.",
+  },
+  {
+    title: "Современное образование",
+    text: "В образовательном процессе используются современные подходы, проектная и исследовательская деятельность.",
+  },
+  {
+    title: "Творческая среда",
+    text: "В гимназии развиваются музыкальные, культурные, краеведческие и патриотические направления.",
+  },
+  {
+    title: "Достижения учеников",
+    text: "Обучающиеся принимают участие в олимпиадах, конкурсах, исследовательских проектах и спортивных соревнованиях.",
+  },
+];
+
+const directions = [
+  "физико-математическое направление",
+  "развивающее обучение",
+  "проектная и исследовательская деятельность",
+  "патриотическое воспитание",
+  "экологическое и краеведческое направление",
+  "дополнительное образование",
+];
+---
+
+<BaseLayout
+  title="О гимназии"
+  description="История и современное развитие гимназии №4 г. Дзержинский"
+>
+  <main>
+    <section class="about-hero">
+      <div class="container">
+        <Breadcrumbs
+          items={[
+            { label: "Главная", href: "/" },
+            { label: "О гимназии" },
+          ]}
+        />
+
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">История и развитие</p>
+
+            <h1>О гимназии</h1>
+
+            <p class="lead">
+              Гимназия №4 г. Дзержинский — образовательная организация
+              с богатой историей, сильными педагогическими традициями
+              и вниманием к развитию каждого ученика.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button" href="#history">
+                История гимназии
+              </a>
+
+              <a class="button secondary" href="/contacts/">
+                Контакты
+              </a>
+            </div>
+          </div>
+
+          <aside class="card hero-card">
+            <h2>Гимназия сегодня</h2>
+
+            <p>
+              Сегодня гимназия сочетает выполнение государственных
+              образовательных стандартов, внедрение современных технологий
+              и бережное отношение к школьным традициям.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Главное</p>
+            <h2>Чем сильна гимназия</h2>
+          </div>
+        </div>
+
+        <div class="grid grid-4">
+          {values.map((value) => (
+            <article class="card value-card">
+              <h3>{value.title}</h3>
+              <p>{value.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section light-section" id="history">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Историческая справка</p>
+            <h2>Этапы развития</h2>
+          </div>
+        </div>
+
+        <div class="timeline">
+          {timeline.map((item) => (
+            <article class="timeline-item">
+              <div class="timeline-year">{item.year}</div>
+
+              <div class="card timeline-card">
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="content-grid">
+          <article class="card">
+            <p class="eyebrow">Традиции</p>
+
+            <h2>Школьный парк и преемственность</h2>
+
+            <p>
+              С первых лет существования школы большое значение имело
+              благоустройство территории. Учителя, ученики и родители
+              вместе создавали школьную среду, а во дворе был заложен парк.
+            </p>
+
+            <p>
+              Эта идея бережного отношения к школе и её пространству
+              сохраняется как важная часть истории гимназии.
+            </p>
+          </article>
+
+          <article class="card">
+            <p class="eyebrow">Педагоги</p>
+
+            <h2>Коллектив единомышленников</h2>
+
+            <p>
+              История гимназии тесно связана с педагогами, которые
+              закладывали образовательные традиции, развивали сильные
+              предметные направления и поддерживали творческую атмосферу.
+            </p>
+
+            <p>
+              Особое место в истории занимает период руководства
+              Черногузовой Светланы Ивановны, при котором школа получила
+              новые направления развития.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section light-section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Образовательная среда</p>
+            <h2>Направления развития</h2>
+          </div>
+        </div>
+
+        <div class="tags">
+          {directions.map((direction) => (
+            <span>{direction}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="card quote-card">
+          <div>
+            <p class="eyebrow">Современная гимназия</p>
+
+            <h2>Традиции и новые технологии</h2>
+
+            <p>
+              Гимназия №4 развивается как современное образовательное
+              учреждение: сохраняет школьные традиции, поддерживает
+              педагогическую преемственность и внедряет новые образовательные
+              технологии.
+            </p>
+          </div>
+
+          <a class="button" href="/admission/">
+            Приём в гимназию
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding: 48px 0 72px;
+    background: linear-gradient(135deg, #eaf1ff, #ffffff);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .eyebrow {
+    margin: 0 0 8px;
+    color: #2357a4;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 13px;
+  }
+
+  h1 {
+    margin: 12px 0;
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.05;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 32px;
+  }
+
+  .lead {
+    max-width: 780px;
+    color: #4b5875;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .hero-card h2 {
+    margin-bottom: 16px;
+    font-size: 24px;
+  }
+
+  .hero-card p,
+  .value-card p,
+  .timeline-card p,
+  .content-grid p,
+  .quote-card p {
+    color: #4b5875;
+    line-height: 1.6;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .light-section {
+    background: #ffffff;
+  }
+
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .value-card {
+    min-height: 220px;
+  }
+
+  .value-card h3 {
+    margin: 0 0 10px;
+  }
+
+  .timeline {
+    display: grid;
+    gap: 18px;
+    position: relative;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .timeline-year {
+    position: sticky;
+    top: 96px;
+    width: fit-content;
+    padding: 10px 14px;
+    border-radius: 999px;
+    background: #2357a4;
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .timeline-card h3 {
+    margin: 0 0 10px;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .content-grid h2 {
+    margin: 8px 0 16px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .tags span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #eaf1ff;
+    color: #2357a4;
+    font-weight: 700;
+  }
+
+  .quote-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .quote-card h2 {
+    margin: 8px 0 12px;
+  }
+
+  @media (max-width: 1000px) {
+    .hero-grid,
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .timeline-item {
+      grid-template-columns: 1fr;
+    }
+
+    .timeline-year {
+      position: static;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .grid-4 {
+      grid-template-columns: 1fr;
+    }
+
+    .section-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .quote-card {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

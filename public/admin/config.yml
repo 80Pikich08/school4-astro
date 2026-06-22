@@ -1,0 +1,70 @@
+local_backend:
+  url: http://localhost:8081/api/v1
+
+backend:
+  name: github
+  repo: lol-no-lol/school4-astro
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+show_preview_links: false
+
+collections:
+  - name: "news"
+    label: "Новости"
+    label_singular: "новость"
+    folder: "src/content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{fields.slug}}"
+    summary: "{{title}} — {{pubDate}}"
+    fields:
+      - { label: "Заголовок", name: "title", widget: "string" }
+      - label: "URL slug латиницей"
+        name: "slug"
+        widget: "string"
+        hint: "Например: den-otkrytyh-dverey. Только латинские буквы, цифры и дефисы."
+        pattern:
+          ["^[a-z0-9-]+$", "Используйте только латинские буквы, цифры и дефисы"]
+      - { label: "Описание", name: "description", widget: "text" }
+      - { label: "Дата публикации", name: "pubDate", widget: "datetime" }
+      - {
+          label: "Изображение",
+          name: "image",
+          widget: "image",
+          required: false,
+        }
+      - { label: "Текст новости", name: "body", widget: "markdown" }
+
+  - name: "documents"
+    label: "Документы"
+    label_singular: "документ"
+    folder: "src/content/documents"
+    create: true
+    slug: "{{fields.slug}}"
+    summary: "{{title}} — {{category}}"
+    fields:
+      - { label: "Название документа", name: "title", widget: "string" }
+      - label: "URL slug латиницей"
+        name: "slug"
+        widget: "string"
+        hint: "Например: pravila-priema. Только латинские буквы, цифры и дефисы."
+        pattern:
+          ["^[a-z0-9-]+$", "Используйте только латинские буквы, цифры и дефисы"]
+      - label: "Категория"
+        name: "category"
+        widget: "select"
+        options:
+          - "Основные документы"
+          - "Для родителей"
+          - "Для учеников"
+          - "Безопасность"
+      - { label: "Дата публикации", name: "pubDate", widget: "datetime" }
+      - { label: "Файл", name: "file", widget: "file", required: false }
+      - { label: "Описание", name: "body", widget: "markdown", required: false }

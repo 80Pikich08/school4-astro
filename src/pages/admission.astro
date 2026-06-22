@@ -1,0 +1,305 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+const steps = [
+  {
+    title: "Изучить информацию",
+    text: "Ознакомьтесь с условиями приёма, образовательными программами и правилами подачи заявления.",
+  },
+  {
+    title: "Подать заявление",
+    text: "Заявление можно подать через региональный портал государственных услуг Московской области.",
+  },
+  {
+    title: "Подготовить документы",
+    text: "При необходимости подготовьте документы, подтверждающие сведения, указанные в заявлении.",
+  },
+  {
+    title: "Получить результат",
+    text: "После рассмотрения заявления родитель получает информацию о зачислении или дальнейших действиях.",
+  },
+];
+
+const directions = [
+  {
+    title: "Приём в 1 класс",
+    text: "Информация для родителей будущих первоклассников: сроки подачи заявления, порядок зачисления и необходимые документы.",
+  },
+  {
+    title: "Перевод из другой школы",
+    text: "Порядок обращения в гимназию при переводе обучающегося из другой образовательной организации.",
+  },
+  {
+    title: "Дополнительное образование",
+    text: "Информация о кружках, секциях и дополнительных образовательных программах для обучающихся.",
+  },
+];
+---
+
+<BaseLayout
+  title="Приём в гимназию"
+  description="Информация о приёме в гимназию №4 г. Дзержинский"
+>
+  <main>
+    <section class="admission-hero">
+      <div class="container">
+        <Breadcrumbs
+          items={[
+            { label: "Главная", href: "/" },
+            { label: "Приём в гимназию" },
+          ]}
+        />
+
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">Набор в образовательную организацию</p>
+
+            <h1>Приём в гимназию</h1>
+
+            <p class="lead">
+              В этом разделе собрана основная информация для родителей и
+              законных представителей: порядок подачи заявления, этапы приёма
+              и способы связи с гимназией.
+            </p>
+
+            <div class="hero-actions">
+              <a
+                class="button"
+                href="https://uslugi.mosreg.ru/"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-umami-event="admission_gosuslugi_click"
+              >
+                Подать заявление
+              </a>
+
+              <a class="button secondary" href="/contacts/">
+                Задать вопрос
+              </a>
+            </div>
+          </div>
+
+          <aside class="card hero-card">
+            <h2>Важно знать</h2>
+
+            <ul>
+              <li>Приём проводится на равных условиях для всех поступающих.</li>
+              <li>Заявление может быть подано через портал государственных услуг.</li>
+              <li>Родители знакомятся с уставом, лицензией и образовательными программами.</li>
+              <li>Для уточнения деталей можно обратиться в гимназию через страницу контактов.</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Порядок действий</p>
+            <h2>Как поступить в гимназию</h2>
+          </div>
+        </div>
+
+        <div class="steps">
+          {steps.map((step, index) => (
+            <article class="card step-card">
+              <span>{index + 1}</span>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section light-section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Разделы приёма</p>
+            <h2>Основные направления</h2>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          {directions.map((direction) => (
+            <article class="card direction-card">
+              <h3>{direction.title}</h3>
+              <p>{direction.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="card info-card">
+          <div>
+            <p class="eyebrow">Обратная связь</p>
+            <h2>Остались вопросы?</h2>
+            <p>
+              Родители и законные представители могут обратиться в гимназию
+              через страницу контактов. Форма обратной связи содержит согласие
+              на обработку персональных данных.
+            </p>
+          </div>
+
+          <a class="button" href="/contacts/">
+            Перейти к контактам
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .admission-hero {
+    padding: 48px 0 72px;
+    background: linear-gradient(135deg, #eaf1ff, #ffffff);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .eyebrow {
+    margin: 0 0 8px;
+    color: #2357a4;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 13px;
+  }
+
+  h1 {
+    margin: 12px 0;
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.05;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 32px;
+  }
+
+  .lead {
+    max-width: 780px;
+    color: #4b5875;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .hero-card h2 {
+    margin-bottom: 16px;
+    font-size: 24px;
+  }
+
+  .hero-card ul {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding-left: 20px;
+    color: #4b5875;
+    line-height: 1.6;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .light-section {
+    background: #ffffff;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  .step-card span {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: #2357a4;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .step-card h3,
+  .direction-card h3 {
+    margin: 0 0 10px;
+  }
+
+  .step-card p,
+  .direction-card p,
+  .info-card p {
+    color: #4b5875;
+    line-height: 1.6;
+  }
+
+  .direction-card {
+    min-height: 190px;
+  }
+
+  .info-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .info-card h2 {
+    margin: 8px 0 12px;
+  }
+
+  @media (max-width: 1000px) {
+    .steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .steps {
+      grid-template-columns: 1fr;
+    }
+
+    .section-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .info-card {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

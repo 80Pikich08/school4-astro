@@ -1,0 +1,60 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+
+export async function getStaticPaths() {
+    const news = await getCollection("news");
+
+    return news.map((item) => ({
+        params: { id: item.id },
+        props: { item },
+    }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+---
+
+<BaseLayout title={item.data.title} description={item.data.description}>
+    <main class="section">
+        <article class="container card article">
+            <Breadcrumbs items={[
+                { label: "Главная", href: "/" },
+                { label: "Новости", href: "/news/" },
+                { label: item.data.title },
+            ]} />
+            <p class="date">{item.data.pubDate.toLocaleDateString("ru-RU")}</p>
+            <h1>{item.data.title}</h1>
+
+            {item.data.image && (
+                <img class="article-image" src={item.data.image} alt={item.data.title} />
+            )}
+
+            <Content />
+        </article>
+    </main>
+</BaseLayout>
+
+<style>
+    .article {
+        max-width: 860px;
+    }
+
+    .date {
+        color: #64708a;
+    }
+
+    .article-image {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 16px;
+        margin: 24px 0;
+        background: #e1e6f0;
+    }
+
+    .aarticle :global(p) {
+        line-height: 1.7;
+    }
+</style>

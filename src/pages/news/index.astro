@@ -1,0 +1,64 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+
+const news = await getCollection ("news");
+
+const sortedNews = news.sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+---
+
+<BaseLayout title="Новости">
+    <main class="section">
+        <div class="container">
+            <Breadcrumbs items={[
+                { label: "Главная", href: "/" },
+                { label: "Новости" },
+            ]} />
+            <h1>Новости</h1>
+
+            <div class="grid grid-3">
+                {sortedNews.map((item) => (
+                    <article class="card">
+                        {item.data.image && (
+                            <img class="news-image" src={item.data.image} alt={item.data.title} />
+                        )}
+
+                        <p class="date">{item.data.pubDate.toLocaleDateString("ru-RU")}</p>
+
+                        <h2>{item.data.title}</h2>
+                        <p>{item.data.description}</p>
+
+                        <a class="button" href={`/news/${item.id}/`}>Читать</a>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </main>
+</BaseLayout>
+
+<style>
+    .date {
+        color: #64708a;
+        font-size: 14px;
+    }
+
+    .news-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        background: #e1e6f0;
+    }
+
+    .card h2 {
+        margin-top: 8px;
+    }
+
+    .button {
+        margin-top: 12px;
+    }
+</style>

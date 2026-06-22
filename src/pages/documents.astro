@@ -1,0 +1,198 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+
+const documents = await getCollection("documents");
+const categories = [
+    "Основные документы",
+    "Для родителей",
+    "Для учеников",
+    "Безопасность",
+];
+
+const sortedDocuments = documents.sort(
+    (a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
+);
+---
+
+<BaseLayout title="Документы">
+    <main class="section">
+        <div class="container">
+            <Breadcrumbs items={[
+                { label: "Главная", href: "/" },
+                { label: "Документы" },
+            ]} />
+            <div class="page-header">
+                <p class="eyebrow">Информационные материалы</p>
+                <h1>Документы</h1>
+                <p>В этом разделе размещаются нормативные документы, памятки, материалы для родителей, учеников и документы о безопасности.</p>
+            </div>
+
+            {categories.map((category) => {
+                const categoryDocuments = sortedDocuments.filter(
+                    (document) => document.data.category === category
+                );
+
+                return (
+                    <section class="documents-section">
+                        <div class="category-header">
+                            <h2>{category}</h2>
+                            <span>{categoryDocuments.length}</span>
+                        </div>
+
+                        {categoryDocuments.length > 0 ? (
+                            <div class="documents-grid">
+                                {categoryDocuments.map((document) => (
+                                    <article class="card document-card">
+                                        <div>
+                                            <p class="category">{document.data.category}</p>
+                                            <h3>{document.data.title}</h3>
+                                            <p class="date">
+                                                Дата публикации:{" "}
+                                                {document.data.pubDate.toLocaleDateString("ru-RU")}
+                                            </p>
+                                        </div>
+
+                                        {document.data.file ? (
+                                            <a class="button" href={document.data.file} target="_blank" rel="noopener noreferrer">Открыть документ</a>
+                                        ) : (
+                                            <p class="no-file">Файл документа не прикреплён</p>
+                                        )}
+                                    </article>
+                                ))}
+                            </div>
+                        ) : (
+                            <div class="empty-card">
+                                <p>В этой категории пока нет документов</p>
+                            </div>
+                        )}
+                    </section>
+                );
+            })}
+        </div>
+    </main>
+</BaseLayout>
+
+<style>
+    .page-header {
+        max-width: 820px;
+        margin-bottom: 36px;
+    }
+
+    .page-header h1 {
+        margin: 8px 0 12px;
+        font-size: clamp(36px, 5vw, 56px);
+    }
+
+    .page-header p {
+        color: #4b5875;
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .eyebrow {
+        margin: 0;
+        color: #2357a4;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-size: 13px;
+    }
+
+    .documents-section {
+        margin-top: 36px;
+    }
+
+    .category-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #dce3f0;
+    }
+
+    .category-header h2 {
+        margin: 0;
+        font-size: 28px;
+    }
+
+    .category-header span {
+        min-width: 36px;
+        height: 36p;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: #eaf1ff;
+        color: #2357a4;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+    }
+
+    .documents-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .document-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 18px;
+    }
+
+    .category {
+        width: fit-content;
+        margin: 0 0 12px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #eaf1ff;
+        color: #2357a4;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .document-card h3 {
+        margin: 0 0 12px;
+        font-size: 22px;
+    }
+
+    .date {
+        margin: 0;
+        color: #64708a;
+        line-height: 1.5;
+    }
+
+    .no-file {
+        margin: 0;
+        color: #8a5360;
+        font-weight: 700;
+    }
+
+    .empty-card {
+        padding: 20px;
+        border: 1px dashed #cbd4e6;
+        border-radius: 16px;
+        background: #ffffff;
+        color: #64708a;
+    }
+
+    .empty-card p {
+        margin: 0;
+    }
+
+    @media (max-width: 800px) {
+        .document-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .category-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+</style>

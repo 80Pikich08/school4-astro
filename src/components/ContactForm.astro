@@ -1,0 +1,110 @@
+<form class="contact-form" method="post">
+  <div class="form-grid">
+    <label>
+      ФИО
+      <input type="text" name="name" placeholder="Иванов Иван Иванович" required />
+    </label>
+
+    <label>
+      Email
+      <input type="email" name="email" placeholder="example@mail.ru" required />
+    </label>
+  </div>
+
+  <label>
+    Тема обращения
+    <input type="text" name="subject" placeholder="Например: вопрос о приёме в гимназию" required />
+  </label>
+
+  <label>
+    Сообщение
+    <textarea name="message" rows="6" placeholder="Введите текст обращения" required></textarea>
+  </label>
+
+  <label class="checkbox">
+    <input type="checkbox" required />
+    <span>
+      Я согласен на обработку персональных данных в соответствии с
+      <a href="/privacy/">Политикой обработки персональных данных</a>.
+    </span>
+  </label>
+
+  <button
+    class="button"
+    type="submit"
+    data-umami-event="contact_form_submit_click"
+  >
+    Отправить обращение
+  </button>
+</form>
+
+<style>
+  .contact-form {
+    display: grid;
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  label {
+    display: grid;
+    gap: 8px;
+    font-weight: 700;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cbd4e6;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #172033;
+    font: inherit;
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: 2px solid #2357a4;
+    outline-offset: 2px;
+    border-color: #2357a4;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  .checkbox input {
+    width: auto;
+    margin-top: 4px;
+  }
+
+  .checkbox a {
+    color: #2357a4;
+    font-weight: 700;
+    text-decoration: underline;
+  }
+
+  button {
+    border: 0;
+  }
+
+  @media (max-width: 700px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
